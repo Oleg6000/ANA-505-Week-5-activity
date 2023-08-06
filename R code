@@ -1,0 +1,21 @@
+#TASK: run the code below to get and save the dataset
+download.file(url = "https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv", destfile = "airline_safety.csv")
+#Then you need to name your dataset
+airline_safety<- read.csv("airline_safety.csv")
+#TASK: take a look at the airline safety data. 
+#RESPONSE: I can see the list of airlines with the safety statistics (8 columns in total).
+#TASK: Install and call the dplyr package. 
+install.packages("dplyr")
+library(dplyr)
+#Let's make a random sample of our data and save it
+mysample<-sample_n(airline_safety, size=15, replace = FALSE, weight = NULL, .env = NULL)
+#TASK: Save the new sample as a csv file
+#RESPONSE: Saved the new sample as csv file
+#TASK: revise this code chunk using piping
+mysample4 <- mysample %>%
+  arrange(airline) %>%
+  filter(incidents_85_99 > 10) %>%
+  rename(seats = avail_seat_km_per_week) %>%
+  select(incidents_00_14, incidents_85_99) %>%
+  summary()
+print(mysample4)
